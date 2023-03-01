@@ -9,7 +9,7 @@ const Navbar = () => {
         return localStorage.getItem("authToken")
       }
 
-    const { user } = useContext(LoadingContext)
+    const { user, getCountries } = useContext(LoadingContext)
 
     const { logout } = useContext(AuthContext)
 
@@ -17,7 +17,7 @@ const Navbar = () => {
         <nav>
 
             <Link to={'/'}>Home</Link>
-            <Link to={'/countries'}>Countries</Link>
+            <Link onClick={getCountries} to={'/countries'}>Countries</Link>
             <Link to={'/posts'}>Posts</Link>
 
             {

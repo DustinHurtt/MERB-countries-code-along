@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 
 import Countries from './pages/Countries';
+import CountryDetails from './pages/CountryDetails';
 import EditPost from './pages/EditPost';
 import EditProfile from './pages/EditProfile';
 import Home from './pages/Home';
@@ -36,6 +37,7 @@ const App = () => {
 
           <Route path='/' element={<Home />} />
           <Route path='/countries' element={<Countries />} />
+          <Route path='/country/:id' element={<CountryDetails />} />
           <Route path='/posts' element={<Posts />} />
 
           <Route element={<LoggedIn />}>

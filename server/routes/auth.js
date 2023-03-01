@@ -64,13 +64,13 @@ router.post("/login", (req, res, next) => {
       );
 
       if (doesMatch) {
-        const payload = { _id: foundUser._id, email: foundUser.email, name: foundUser.name };
+        const payload = { _id: foundUser._id, email: foundUser.email, name: foundUser.name, profile_image: foundUser.profile_image, city: foundUser.city, age: foundUser.age, countries_visited: foundUser.countries_visited, posts: foundUser.posts };
 
         const token = jwt.sign(payload, process.env.SECRET, {
           algorithm: "HS256",
           expiresIn: "24hr",
         });
-        res.json({ token: token, id: foundUser._id, message: `Welcome ${foundUser.name}` });
+        res.json({ token: token, message: `Welcome ${foundUser.name}` });
       } else {
         return res.status(402).json({ message: "Email or Password is incorrect" });
       }

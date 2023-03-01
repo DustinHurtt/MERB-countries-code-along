@@ -25,7 +25,7 @@ router.post('/profile-edit/:userId', (req, res, next) => {
       },
       {new: true}
       )
-      .then((udpatedUser) => {
+      .then((updatedUser) => {
         res.json(updatedUser)
       })
       .catch((err) => {

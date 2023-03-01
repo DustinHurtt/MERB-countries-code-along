@@ -35,7 +35,7 @@ router.post("/signup", (req, res, next) => {
               algorithm: "HS256",
               expiresIn: "24hr",
             });
-            res.json({ token: token, id: createdUser._id, message: `Welcome ${createdUser.name}`  });
+            res.json({ token: token, _id: createdUser._id, message: `Welcome ${createdUser.name}`  });
           })
           .catch((err) => {
             res.status(400).json(err.message);
@@ -70,7 +70,7 @@ router.post("/login", (req, res, next) => {
           algorithm: "HS256",
           expiresIn: "24hr",
         });
-        res.json({ token: token, message: `Welcome ${foundUser.name}` });
+        res.json({ _id: foundUser._id, token: token, message: `Welcome ${foundUser.name}` });
       } else {
         return res.status(402).json({ message: "Email or Password is incorrect" });
       }

@@ -8,7 +8,7 @@ const LoadingProvider = ({ children }) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [user, setUser] = useState(null);
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState('Unchanh=ged');
 
     const [ countries, setCountries ] = useState([]);
     const [ country, setCountry ] = useState(null);
@@ -24,7 +24,7 @@ const LoadingProvider = ({ children }) => {
     }
 
     return (
-        <LoadingContext.Provider value={{ countries, country, posts, post, isLoading, message, user, setPost, setPosts, setCountries, setCountry, setIsLoading, setMessage, setUser, setTimedMessage }}>
+        <LoadingContext.Provider value={{ countries, country, posts, post, isLoading, message, setUser, user, setPost, setPosts, setCountries, setCountry, setIsLoading, setMessage, setTimedMessage }}>
           {children}
         </LoadingContext.Provider>
       );

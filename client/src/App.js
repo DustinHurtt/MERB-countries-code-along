@@ -17,14 +17,17 @@ import Signup from './pages/Signup';
 
 const App = () => {
 
-  let token = localStorage.getItem("authToken");
+
+  const getToken = () => {
+    return localStorage.getItem("authToken")
+  }
 
   const LoggedIn = () => {
-    return token ? <Outlet /> : <Navigate to="/" />;
+    return getToken() ? <Outlet /> : <Navigate to="/" />;
   };
 
   const NotLoggedIn = () => {
-    return !token ? <Outlet /> : <Navigate to="/" />;
+    return !getToken() ? <Outlet /> : <Navigate to="/" />;
   };
 
   return (

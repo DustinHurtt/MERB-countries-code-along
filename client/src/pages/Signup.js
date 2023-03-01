@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { post } from "../services/authService"
 import { AuthContext } from "../context/auth.context"
+import { LoadingContext } from "../context/loading.context"
 
 const Signup = () => {
 
@@ -26,9 +27,11 @@ const Signup = () => {
         e.preventDefault()
 
         post('/auth/signup', newUser)
-            .then((createdUser) => {
-                console.log("Created User", createdUser)
-                navigate('/profile')
+            .then((results) => {
+                console.log("Created User", results.data)
+                navigate(`/profile/${results.data._id}`)
+                localStorage.setItem('authToken', results.data.token )
+                
             })
             .catch((err) => {
                 console.log(err)

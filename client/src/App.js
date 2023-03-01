@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import { Routes, Route, Link, Navigate, Outlet } from 'react-router-dom'
 import './App.css';
 
-function App() {
+import Navbar from './components/Navbar';
+
+const App = () => {
+
+  let token = localStorage.getItem("authToken");
+
+  const LoggedIn = () => {
+    return token ? <Outlet /> : <Navigate to="/" />;
+  };
+
+  const NotLoggedIn = () => {
+    return !token ? <Outlet /> : <Navigate to="/" />;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+
+      <Navbar />
+
+        <Routes>
+        
+
+          <Route element={<LoggedIn />}>
+            
+          </Route>
+
+
+          <Route element={<NotLoggedIn />}>
+            
+          </Route>
+
+
+        </Routes>
+
     </div>
   );
 }

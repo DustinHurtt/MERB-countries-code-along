@@ -8,7 +8,9 @@ var mongoose = require('mongoose');
 var cors = require('cors')
 
 var usersRouter = require('./routes/users');
-var authRouter = require('./routes/auth')
+var authRouter = require('./routes/auth');
+var countriesRouter = require('./routes/countries');
+var postsRouter = require('./routes/posts')
 
 var app = express();
 
@@ -27,8 +29,10 @@ app.use(
     })
   );
 
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-app.use('/auth', authRouter)
+app.use('/countries', countriesRouter);
+app.use('/posts', postsRouter)
 
 app.use(function (req, res, next) {
     next(createError(404));

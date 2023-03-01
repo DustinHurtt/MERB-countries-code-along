@@ -5,7 +5,8 @@ const postSchema = new Schema(
     title: String,
     story: String,
     date: Date,
-    contributor: {type: Schema.Types.ObjectId, ref: 'User'}
+    contributor: {type: Schema.Types.ObjectId, ref: 'User'},
+    country: {type: Schema.Types.ObjectId, ref: 'Country'}
   },
   {
     timeseries: true,

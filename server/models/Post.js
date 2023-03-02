@@ -4,7 +4,7 @@ const postSchema = new Schema(
   {
     title: String,
     story: String,
-    date: Date,
+    date: String,
     photo: String,
     contributor: {type: Schema.Types.ObjectId, ref: 'User'},
     country: {type: Schema.Types.ObjectId, ref: 'Country'}

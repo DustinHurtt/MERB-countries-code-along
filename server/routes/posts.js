@@ -17,6 +17,18 @@ router.get('/', (req, res, next) => {
     })
 });
 
+router.get('/post-detail/:id', (req, res, next) => {
+  Post.findOne({_id: req.params.id})
+    .populate('contributor')
+    .populate('country')
+    .then((foundPost) => {
+        res.json(foundPost)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+});
+
 
 router.post('/create-post/:userId', (req, res, next) => {
 
@@ -24,17 +36,41 @@ router.post('/create-post/:userId', (req, res, next) => {
         title: req.body.title,
         story: req.body.story,
         date: req.body.date,
+        photo: req.body.photo,
         contributor: req.params.userId,
         country: req.body.country
     }
 
     Post.create(newPost)
-        .then((createdPost) => {
-            res.json(createdPost)
+    .then((createdPost) => {
+        User.findByIdAndUpdate(
+            
+                req.params.userId
+            , 
+            {
+            $push: {posts: createdPost._id}
+            },
+            {new: true})
+            .then((updatedUser) => {
+                console.log(updatedUser)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        return createdPost
+    })
+    .then((post) => {
+         return post.populate('contributor')
         })
-        .catch((err) => {
-            console.log(err)
-        })
+    .then((populated) => {
+        return populated.populate('country')
+    })
+    .then((populatedPost) => {
+        res.json(populatedPost)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
     
 })
 

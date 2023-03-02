@@ -1,9 +1,17 @@
 import { useContext, useState } from "react"
+
+import { useNavigate } from "react-router-dom"
+
 import { LoadingContext } from "../context/loading.context"
+
+import { post } from "../services/authService"
+
 
 const NewPost = () => {
 
-    const { user } = useContext(LoadingContext)
+    const { user, posts, setUser, setPosts } = useContext(LoadingContext)
+
+    const navigate = useNavigate()
 
     const [ newPost, setNewPost ] = useState(
         {
@@ -19,7 +27,32 @@ const NewPost = () => {
 
     const handleChange = (e) => {
         setNewPost((recent) => ({...recent, [e.target.name]: e.target.value}))
-        console.log(newPost)
+        console.log("NEW POST", newPost)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        post(`/posts/create-post/${user._id}`, newPost)
+            .then((results) => {
+
+                let newPosts = [...posts]
+                newPosts.unshift(results.data)
+                setPosts(newPosts)
+
+                let newUser = Object.assign({}, user)
+                newUser.posts.push(results.data)
+                setUser(newUser)
+
+                console.log(results.data)
+
+                navigate('/posts')
+
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
     }
 
     return (
@@ -28,7 +61,7 @@ const NewPost = () => {
 
             {
                 user ? 
-                    <form>
+                    <form onSubmit={handleSubmit}>
 
                         <label>Country</label>
                         <select name="country" value={newPost.country} onChange={handleChange}>
@@ -53,6 +86,8 @@ const NewPost = () => {
 
                         <label>Photo</label>
                         <input type='string' name='photo' value={newPost.photo} onChange={handleChange}/>
+
+                        <button type="submit">Create Post</button>
 
                     </form>
 

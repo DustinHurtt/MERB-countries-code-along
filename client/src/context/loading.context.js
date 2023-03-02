@@ -62,8 +62,28 @@ const LoadingProvider = ({ children }) => {
       }
   }
 
+  const getPosts = () => {
+    get('/posts')
+    .then((results) => {
+      setPosts(results.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const getPost = (id) => {
+    get(`/posts/post-detail/${id}`)
+      .then((results) => {
+        setPost(results.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
     return (
-        <LoadingContext.Provider value={{ countries, country, posts, post, isLoading, message, setUser, user, setPost, setPosts, setCountries, setCountry, setIsLoading, setMessage, setTimedMessage, getCountries, findCountry }}>
+        <LoadingContext.Provider value={{ countries, country, posts, post, isLoading, message, setUser, user, setPost, setPosts, setCountries, setCountry, setIsLoading, setMessage, setTimedMessage, getCountries, findCountry, getPosts, getPost }}>
           {children}
         </LoadingContext.Provider>
       );

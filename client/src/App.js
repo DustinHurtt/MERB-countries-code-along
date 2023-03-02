@@ -14,6 +14,7 @@ import OtherProfile from './pages/OtherProfile';
 import Posts from './pages/Posts';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
+import PostDetails from './pages/PostDetails';
 
 const App = () => {
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route path='/countries' element={<Countries />} />
           <Route path='/country/:id' element={<CountryDetails />} />
           <Route path='/posts' element={<Posts />} />
+          <Route path='/post-details/:id' element={<PostDetails />} />
 
           <Route element={<LoggedIn />}>
 

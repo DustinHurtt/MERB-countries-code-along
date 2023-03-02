@@ -4,9 +4,11 @@ import { useContext, useEffect } from "react"
 
 import { useParams } from "react-router-dom"
 
+import { post } from "../services/authService"
+
 const CountryDetails = () => {
 
-    const { country, findCountry } = useContext(LoadingContext)
+    const { country, findCountry, user, setUser } = useContext(LoadingContext)
 
     const { id } = useParams()
 
@@ -14,6 +16,40 @@ const CountryDetails = () => {
     
         return `https://flagpedia.net/data/flags/icon/72x54/${code.toLowerCase()}.png`
     }
+
+    const addCountry = (thisCountry) => {
+        let addedCountry = {
+            name: thisCountry.name.common,
+            capital: thisCountry.capital[0],
+            alpha2Code: thisCountry.alpha2Code,
+            flag: getPhoto(thisCountry.alpha2Code),
+            region: thisCountry.region,
+            languages: Object.values(thisCountry.languages),
+            currency: Object.values(thisCountry.currencies)
+
+        }
+
+        console.log("Added Country", addedCountry)
+
+        post(`/countries/add-country/${user._id}`, addedCountry)
+            .then((results) => {
+                console.log(results.data)
+                setUser(results.data)
+            })
+            .catch((err) => {
+                console.log("line 40")
+                console.log(err)
+            })
+
+    }
+
+    // name: String,
+    // capital: String,
+    // alpha2Code: String,
+    // flag: String,
+    // region: String,
+    // languages: [String],
+    // currency: [String]
 
 
     useEffect(() => {
@@ -49,6 +85,7 @@ const CountryDetails = () => {
                                 <sup>2</sup>
                             </td>
                             </tr>
+                            <tr><td>Region: {country.region}</td></tr>
 
                             <tr><td>Languages:</td></tr>
 
@@ -85,6 +122,17 @@ const CountryDetails = () => {
 
                         </tbody>
                     </table>
+                    
+                    {
+                        user ?
+
+                        <button onClick={()=>addCountry(country)}>Add trip</button>
+
+                        :
+
+                        <p>Signup or Login to add trip</p>
+                    }
+
 
                 </>
 

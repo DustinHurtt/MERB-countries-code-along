@@ -7,8 +7,8 @@ const countrySchema = new Schema(
     alpha2Code: String,
     flag: String,
     region: String,
-    languages: Object,
-    currency: Object
+    languages: [String],
+    currency: [Object]
   },
   {
     timeseries: true,

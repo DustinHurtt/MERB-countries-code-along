@@ -40,6 +40,8 @@ const AuthProvider = ({ children }) => {
                 setIsLoading(false);
                 setUser(null);
             }
+
+            console.log("This is the user", user)
     }
 
     const logout = () => {

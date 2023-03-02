@@ -4,19 +4,24 @@ var router = express.Router();
 const Country =  require('../models/Country');
 const User = require('../models/User');
 
-/* GET users listing. */
-router.get('/add-country/:userId', (req, res, next) => {
+router.post('/add-country/:userId', (req, res, next) => {
   
     Country.findOne({alpha2Code: req.body.alpha2Code})
         .then((foundCountry) => {
             if (foundCountry) {
 
                 User.findByIdAndUpdate(req.params.userId, {
-                    $push: {countries_visited: foundCountry._id}
+                    $addToSet: {countries_visited: foundCountry._id}
                 },
                 {new: true})
                 .then((updatedUser) => {
-                    res.json(updatedUser)
+                    return updatedUser.populate('countries_visited')
+                    })
+                .then((populated) => {
+                    return populated.populate('posts')
+                })
+                .then((second) => {
+                    res.json(second)
                 })
                 .catch((err) => {
                     console.log(err)
@@ -33,15 +38,27 @@ router.get('/add-country/:userId', (req, res, next) => {
                     languages: req.body.languages,
                     currency: req.body.currency
                 }
-                Country.create({newCountry})
+
+
+                Country.create(newCountry)
                     .then((createdCountry) => {
-                        User.findByIdAndUpdate(req.params.userId, {
+                        return User.findByIdAndUpdate(
+                            {
+                                _id: req.params.userId
+                            }, 
+                            {
                             $push: {countries_visited: createdCountry._id}
-                        },
-                        {new: true})
+                            },
+                            {new: true})
                     })
                     .then((updatedUser) => {
-                        res.json(updatedUser)
+                         return updatedUser.populate('countries_visited')
+                        })
+                    .then((populated) => {
+                        return populated.populate('posts')
+                    })
+                    .then((second) => {
+                        res.json(second)
                     })
                     .catch((err) => {
                         console.log(err)

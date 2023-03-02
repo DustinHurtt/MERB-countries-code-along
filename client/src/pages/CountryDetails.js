@@ -2,7 +2,7 @@ import { LoadingContext } from "../context/loading.context"
 
 import { useContext, useEffect } from "react"
 
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 import { post } from "../services/authService"
 
@@ -11,6 +11,8 @@ const CountryDetails = () => {
     const { country, findCountry, user, setUser } = useContext(LoadingContext)
 
     const { id } = useParams()
+
+    const navigate = useNavigate()
 
     const getPhoto = (code) => {
     
@@ -35,6 +37,7 @@ const CountryDetails = () => {
             .then((results) => {
                 console.log(results.data)
                 setUser(results.data)
+                navigate('/new-post')
             })
             .catch((err) => {
                 console.log("line 40")
@@ -42,15 +45,6 @@ const CountryDetails = () => {
             })
 
     }
-
-    // name: String,
-    // capital: String,
-    // alpha2Code: String,
-    // flag: String,
-    // region: String,
-    // languages: [String],
-    // currency: [String]
-
 
     useEffect(() => {
 

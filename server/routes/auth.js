@@ -86,7 +86,12 @@ router.get("/verify", isAuthenticated, (req, res) => {
   .populate('countries_visited')
   .populate('posts')
   .then((foundUser) => {
-    res.status(200).json(foundUser);
+
+    const payload = { ...foundUser };
+    delete payload._doc.password;
+
+    res.status(200).json(payload._doc);
+    
   })
   .catch((err) => {
     console.log(err)

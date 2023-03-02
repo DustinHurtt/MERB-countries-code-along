@@ -4,9 +4,13 @@ import { LoadingContext } from '../context/loading.context'
 
 const PostDetails = () => {
 
-    const { post, getPost } = useContext(LoadingContext)
+    const { user, post, getPost } = useContext(LoadingContext)
 
     const { id } = useParams()
+
+    const checkOwner = (postOwner, userId) => {
+        return (postOwner === userId)
+    }
 
 
     useEffect(() => {
@@ -26,11 +30,27 @@ const PostDetails = () => {
         {
             post ?
 
-            <h2>{post.title}</h2>
+            <div>
+
+                <h2>{post.title}</h2>
+
+                    { 
+
+                        user &&
+
+                        
+
+                        (checkOwner(post.contributor._id, user._id)) && <button>Edit Post</button>
+
+                    }
+
+            </div>
+
+    
 
             : <h4>Loading...</h4>
         }
-    
+
     
     
     </div>

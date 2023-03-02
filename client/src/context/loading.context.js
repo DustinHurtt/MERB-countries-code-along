@@ -25,9 +25,27 @@ const LoadingProvider = ({ children }) => {
     }
 
     const getCountries = () => {
+
+      if (!countries) {
+        console.log("Calling API")
+        axios.get('https://ih-countries-api.herokuapp.com/countries')
+        .then((response) => {
+          setCountries(response.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    }
+
+    const noCountries = (code) => {
       axios.get('https://ih-countries-api.herokuapp.com/countries')
       .then((response) => {
-        setCountries(response.data)
+        let foundCountries = response.data
+        setCountries(foundCountries)
+        let thisCountry = foundCountries.find((country) => country.alpha2Code === code)
+        setCountry(thisCountry)
+        
       })
       .catch((err) => {
         console.log(err)
@@ -35,8 +53,13 @@ const LoadingProvider = ({ children }) => {
     }
 
     const findCountry = (code) => {
-      let thisCountry = countries.find((country) => country.alpha2Code === code)
-      setCountry(thisCountry)
+
+      if (!countries) {
+        noCountries(code)
+      } else {
+        let thisCountry = countries.find((country) => country.alpha2Code === code)
+        setCountry(thisCountry)
+      }
   }
 
     return (

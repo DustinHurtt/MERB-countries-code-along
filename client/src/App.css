@@ -20,3 +20,11 @@ form {
   border: 1px solid black;
   width: 50vw;
 }
+
+
+
+.country {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

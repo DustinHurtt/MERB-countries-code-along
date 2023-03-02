@@ -10,11 +10,6 @@ const CountryDetails = () => {
 
     const { id } = useParams()
 
-    // const findCountry = (code) => {
-    //     return countries.find((country) => country.alpha2Code === code)
-    // }
-
-    
     const getPhoto = (code) => {
     
         return `https://flagpedia.net/data/flags/icon/72x54/${code.toLowerCase()}.png`
@@ -32,7 +27,7 @@ const CountryDetails = () => {
 
     return (
 
-        <div className="col-7">
+        <div className="country">
 
         {
 
@@ -54,6 +49,39 @@ const CountryDetails = () => {
                                 <sup>2</sup>
                             </td>
                             </tr>
+
+                            <tr><td>Languages:</td></tr>
+
+                            {Object.values(country.languages).length ? 
+                            
+                                Object.values(country.languages).map((language) => {
+                                    return (
+                                        <tr key={language}>
+                                            <td>{language}</td>
+                                        </tr>
+                                    )
+                                })
+                            
+                                : <p>No official langauges</p>
+
+                            }
+                            <tr>
+                            <td>Currencies:</td>
+                            </tr>
+
+                            {Object.values(country.currencies).length ? 
+                            
+                                Object.values(country.currencies).map((currency) => {
+                                    return (
+                                        <tr key={currency.name}>
+                                            <td>{currency.name}</td>
+                                        </tr>
+                                    )
+                                })
+                            
+                                : <p>No official currencies</p>
+
+                            }
 
                         </tbody>
                     </table>

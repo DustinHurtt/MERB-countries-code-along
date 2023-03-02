@@ -16,9 +16,7 @@ const Countries = () => {
     }
 
     useEffect(() => {
-        if (!countries) {
             getCountries()
-        }
     }, [])
 
     return (
